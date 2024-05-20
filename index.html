@@ -74,10 +74,10 @@
             computed: {
                 personasFiltradas() {
                     return this.personas.filter((persona) => {
-                        let registroCompleto = `${persona.nombre} ${persona.apellido} ${persona.dni} ${persona.correo}`
-                        return registroCompleto.toLowerCase().includes(this.criterioDeBusqueda.toLowerCase()) 
-                        && registroCompleto.toLowerCase().includes(this.criterioDeBusqueda2.toLowerCase())
-                    });
+                    let nombreYApellido = `${persona.nombre} ${persona.apellido}`
+                    let dni = `${persona.dni}`
+                    return nombreYApellido.toLowerCase().includes(this.criterioDeBusqueda.toLowerCase()) && dni.includes(this.criterioDeBusqueda2)
+                });
                 }
             },
             methods: {
@@ -85,7 +85,9 @@
                     return `${persona.nombre} ${persona.apellido}`
                 },
                 minimoDeCaracteres(){
-                    return (this.criterioDeBusqueda.length || this.criterioDeBusqueda2.length) >=3 ? false : true
+                    return this.criterioDeBusqueda.length <= 3 
+                    && this.criterioDeBusqueda2.length <= 3 
+                    && (this.criterioDeBusqueda.length > 0 || this.criterioDeBusqueda2.length > 0)
                 }
             }
         }).mount('#app')
